@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SPAS - سونلغاز</title>
+    <link rel="manifest" href="manifest.json">
+       
+    <meta name="theme-color" content="#0a1628">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SPAS">
+    <meta name="application-name" content="SPAS">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="msapplication-TileColor" content="#0a1628">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="network-status" class="network-status online">
+        <div class="network-dot"></div>
+        <span class="network-text">متصل</span>
+    </div>
+    <div id="login-screen">
+        <div class="login-grid"></div>
+        <div class="login-glow"></div>
+        <div class="login-glow-2"></div>
+
+        <div class="login-card">
+            <div class="login-logo-ring"><span class="login-logo-text">SPAS</span></div>
+            <p class="login-subtitle">نظام إدارة المناوبات</p>
+            <div class="login-divider"></div>
+
+            <div id="login-form-state">
+                <form id="authForm">
+                    <div class="input-group" style="margin-bottom: 15px; position: relative;">
+                        <input type="email" id="email" class="spas-dialog-input" placeholder="أدخل بريدك الإلكتروني" required dir="ltr">
+                    </div>
+                    
+                    <div class="input-group" style="margin-bottom: 15px; position: relative;">
+                        <input type="password" id="password" class="spas-dialog-input" placeholder="أدخل كلمة المرور" required dir="ltr" style="padding-left: 45px;">
+                        <button type="button" class="toggle-password" id="togglePassword" style="position: absolute; left: 10px; top: 13px; background: none; border: none; cursor: pointer; color: #94a3b8;">
+                            <svg id="eyeIcon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="width: 20px; height: 20px;">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                            </svg>
+                        </button>
+                    </div>
+
+                    <div class="input-group" id="confirmPasswordGroup" style="margin-bottom: 15px; position: relative; display: none;">
+                        <input type="password" id="confirmPassword" class="spas-dialog-input" placeholder="تأكيد كلمة المرور" dir="ltr" style="padding-left: 45px;">
+                        <button type="button" class="toggle-password" id="toggleConfirmPassword" style="position: absolute; left: 10px; top: 13px; background: none; border: none; cursor: pointer; color: #94a3b8;">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="width: 20px; height: 20px;">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                            </svg>
+                        </button>
+                    </div>
+
+                    <button type="submit" class="btn-enter-app" id="submitBtn"><span id="submitBtnText">دخول</span></button>
+                </form>
+
+                <div style="margin-top: 15px;">
+                    <button type="button" class="btn-google-login" id="btnGoogleLogin" onclick="handleGoogleLogin()">
+                        <svg class="google-icon" viewBox="0 0 24 24">
+                            <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                            <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                            <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
+                            <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+                        </svg>
+                        <span>المتابعة بحساب Google</span>
+                    </button>
+                </div>
+
+                <div style="display: flex; justify-content: space-between; margin-top: 15px;">
+                    <button type="button" class="btn-signout" id="toggleModeBtn" style="margin: 0; color: #60a5fa;">إنشاء حساب جديد</button>
+                    <button type="button" class="btn-signout" id="forgotPasswordBtn" style="margin: 0; color: #94a3b8;">نسيت كلمة المرور؟</button>
+                </div>
+                <div class="login-error" id="loginError"></div>
+            </div>
+
+            <div class="login-user-info" id="login-user-state">
+                <img class="user-avatar" id="userAvatar" src="icons/icon-512.png" alt="">
+                <div class="user-name" id="userName"></div>
+                <div class="user-email" id="userEmail"></div>
+                <button type="button" class="btn-enter-app" onclick="enterApp()"><span>دخول التطبيق</span><span style="font-size:1.1rem;">←</span></button>
+                <button type="button" class="btn-signout" onclick="confirmSignOut()">تسجيل خروج</button>
+            </div>
+
+            <div class="login-footer">
+                <div class="security-badges">
+                    <div class="badge-item"><div class="badge-dot"></div><span>آمن ومشفّر</span></div>
+                    <div class="badge-item"><div class="badge-dot"></div><span>Firestore Auth</span></div>
+                    <div class="badge-item"><div class="badge-dot"></div><span>v2.1</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="shift-app" class="app-section active">
+        <div class="app-header-shift">
+            <h1 style="margin:0; font-size:1.8rem; font-weight:800;">نظام المناوبات</h1>
+            <p style="margin:8px 0 0 0; opacity:0.9; font-size:0.95rem; font-weight:bold; line-height:1.4;">
+                شركة أمن ورعاية المنشآت الكهربائية والغازية<br>
+                <span style="font-weight:900; color:var(--primary); font-size:1.3rem; letter-spacing:2px; display:inline-block; margin-top:3px;">SPAS</span>
+            </p>
+        </div>
+
+        <div class="controls-container">
+            <button type="button" class="btn-top-control" onclick="confirmSignOut()" style="color: #ef4444;">🚪 خروج</button>
+            <button type="button" class="btn-top-control" onclick="openSettings()">⚙️ الإعدادات</button>
+            <button type="button" class="btn-top-control" onclick="goToCurrentMonth()">📅 اليوم </button>
+        </div>
+
+        <div class="groups-summary">
+            <div class="group-card"><div class="g-circle bg-a">أ</div><div class="g-score" id="total-a">0</div></div>
+            <div class="group-card"><div class="g-circle bg-b">ب</div><div class="g-score" id="total-b">0</div></div>
+            <div class="group-card"><div class="g-circle bg-c">ج</div><div class="g-score" id="total-c">0</div></div>
+            <div class="group-card"><div class="g-circle bg-d">د</div><div class="g-score" id="total-d">0</div></div>
+        </div>
+
+        <div class="month-nav-wrapper">
+            <div class="month-arrows-vertical">
+                <button type="button" class="btn-arrow-v" onclick="changeMonth(1)">▲</button>
+                <button type="button" class="btn-arrow-v" onclick="changeMonth(-1)">▼</button>
+            </div>
+            <div class="month-label" id="monthDisplay">--</div>
+            <div class="nav-divider"></div>
+            <div class="day-input-wrap">
+                <span class="day-input-label">يوم</span>
+                <input id="dayJumpInput" class="day-input" type="number" min="1" max="31" placeholder="--" inputmode="numeric" oninput="onDayInputChange(this)">
+            </div>
+        </div>
+        <div style="display: flex; justify-content: center; margin-bottom: 12px; padding: 0 15px;">
+            <button type="button" id="toggle-note-mode-btn" class="btn-top-control" style="width: auto; padding: 0 20px; background: #ffffff; color: #64748b; border: 1px solid #e2e8f0; font-size: 0.85rem; height: 40px; transition: all 0.3s ease;">
+                <span id="note-mode-icon">🔒</span> <span id="note-mode-text" style="margin-right: 5px;">وضع العرض (محمي)</span>
+            </button>
+        </div>
+        <div class="schedule-container" id="scheduleTableContainer">
+            <table class="schedule-table">
+                <thead><tr><th>#</th><th>أ</th><th>ب</th><th>ج</th><th>د</th></tr></thead>
+                <tbody id="calendarBody"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="career-app" class="app-section">
+        <button type="button" class="btn-logout-circular" onclick="confirmSignOut()" aria-label="تسجيل الخروج">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                <polyline points="16 17 21 12 16 7"></polyline>
+                <line x1="21" y1="12" x2="9" y2="12"></line>
+            </svg>
+        </button>
+        
+        <div style="text-align:center; margin-bottom:20px;">
+            <h1 style="margin:0; background: linear-gradient(to bottom, #fff, #6c757d); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size:2rem; font-weight:900;">SONELGAZ</h1>
+            <p style="margin:2px 0 0 0; color:var(--primary); font-weight:800; font-size:1.2rem; letter-spacing:3px; opacity:0.8;">SPAS</p>
+        </div>
+
+        <div class="sg-card" id="career-form-card">
+            <h3 id="career-form-title" style="color:var(--text-dark-main); text-align:center;">إضافة موظف جديد</h3>
+            <input type="text" id="in-name" class="modern-input" placeholder="الاسم الكامل">
+            <div style="display:flex; gap:10px; margin-top:15px;">
+                <div style="flex:1;">
+                    <label style="display:block; text-align:center; color:#94a3b8; font-size:0.9rem; font-weight:bold; margin-bottom:5px;">تاريخ الميلاد</label>
+                    <input type="date" id="in-birth" class="modern-input">
+                </div>
+                <div style="flex:1;">
+                    <label style="display:block; text-align:center; color:#94a3b8; font-size:0.9rem; font-weight:bold; margin-bottom:5px;">تاريخ التعيين</label>
+                    <input type="date" id="in-rec" class="modern-input">
+                </div>
+            </div>
+            <label style="display:block; text-align:center; font-size:0.9rem; color:#94a3b8; margin-top:15px;">الخدمة العسكرية / الأقدمية السابقة</label>
+            <div style="display:flex; gap:5px; margin-top:5px;">
+                <input type="number" id="in-mil-y" class="modern-input" placeholder="سنة">
+                <input type="number" id="in-mil-m" class="modern-input" placeholder="شهر">
+                <input type="number" id="in-mil-d" class="modern-input" placeholder="يوم">
+            </div>
+            <div style="display:flex; gap:8px; margin-top:20px;">
+                <button type="button" class="btn-3d-action btn-dark-3d" id="btn-save-career" style="flex:1;" onclick="saveCareerWorker()">حفظ في قاعدة البيانات</button>
+                <button type="button" class="btn-3d-action btn-red" id="btn-cancel-career" style="display:none; flex:0 0 auto; width:50px;" onclick="cancelCareerEdit()">✖</button>
+            </div>
+        </div>
+
+        <div id="career-workers-list" style="margin-top:10px; padding-bottom:100px;"></div>
+    </div>
+
+    <div id="medals-page" class="medals-page">
+        <div class="medals-page-header">
+            <button type="button" class="btn-close-medals" onclick="closeMedalsPage()">❌</button>
+            <h2 id="mp-worker-name">اسم الموظف</h2>
+            <div style="width:40px;"></div>
+        </div>
+        <div class="medals-page-body">
+            <div class="sg-card" style="text-align:center; border-bottom:4px solid var(--primary); background:rgba(30,41,59,0.6);">
+                <h1 id="res-years" style="color:var(--text-dark-main); font-size:3.5rem; margin:10px 0; font-weight:800;">0 سنة</h1>
+                <p id="res-detail" style="color:#94a3b8; margin:0; font-size:1.1rem;"></p>
+            </div>
+            <h3 style="color:var(--text-dark-main); text-align:center; margin:20px 0;">ساحة الأوسمة الاستحقاقية</h3>
+            <div id="medals-grid" class="medals-grid"></div>
+            <div class="sg-card" style="margin-top:20px; text-align:center; background:rgba(15,23,42,0.8);">
+                <h4 style="margin:0 0 10px 0; color:var(--text-dark-main)">المتبقي على التقاعد (سن 60)</h4>
+                <div id="retire-date" style="font-family:monospace; font-size:1.5rem; letter-spacing:2px; color:white;"></div>
+                <div id="retire-countdown" style="margin-top:10px; font-weight:bold; color:#cbd5e1;"></div>
+            </div>
+        </div>
+    </div>
+
+    <nav class="bottom-nav">
+        <button type="button" class="nav-item active" onclick="switchApp('shift'); scrollToToday();">
+            <span class="nav-icon">📅</span><span>المناوبات</span>
+        </button>
+        <button type="button" class="nav-item" id="nav-leave" onclick="openLeaveModal()">
+            <span class="nav-icon">🏖️</span><span>العطلة</span>
+        </button>
+        <button type="button" class="nav-item" id="nav-promo" onclick="openWorkersList()">
+            <span class="nav-icon">📈</span><span>ترقيات العمال</span>
+        </button>
+        <button type="button" class="nav-item" onclick="switchApp('career')">
+            <span class="nav-icon">🏅</span><span>الميداليات</span>
+        </button>
+    </nav>
+
+    <div id="workersListModal" class="modal">
+        <div class="modal-box-light">
+            <h3 style="text-align:center; margin-bottom:15px; color:#1e3a8a;">قائمة العمال</h3>
+            <div id="workersListSimpleContainer" style="max-height:300px; overflow-y:auto; padding-right:5px;"></div>
+            <button type="button" class="btn-top-control" style="width:100%; margin-top:10px; background:#10b981; color:white;" onclick="addNewWorkerPrompt()">+ إضافة عامل جديد</button>
+            <button type="button" class="btn-top-control" style="width:100%; margin-top:10px; background:#FFFFFF;" onclick="document.getElementById('workersListModal').style.display='none'">إغلاق</button>
+        </div>
+    </div>
+
+    <div id="workerPromoModal" class="modal">
+        <div class="modal-box-dark" style="position: relative; padding-bottom: 70px;">
+            
+            <button type="button" id="btnShowAddPromo" class="top-right-add-btn" onclick="showAddPromoForm()">
+                <svg viewBox="0 0 24 24" width="28" height="28" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+            </button>
+
+            <div style="text-align:center; margin-bottom:20px;">
+                <h2 id="wh-workerName" style="margin:0; color:white;">اسم العامل</h2>
+                <p style="margin:5px 0 0 0; font-size:0.85rem; color:#64748b;">سجل الترقيات خلال المسار المهني</p>
+            </div>
+            
+            <div id="wh-list" style="background:transparent; padding:10px 20px 10px 10px; border-radius:15px; min-height:100px; max-height:280px; overflow-y:auto; overflow-x:hidden;"></div>
+
+            <div class="add-promo-box" id="promoFormContainer" style="display:none; position: relative; z-index: 10;">
+                <h4 id="formTitle" style="text-align:center; color:#3b82f6; margin:0 0 10px 0;">إضافة ترقية جديدة</h4>
+                <div style="display:flex; gap:10px;">
+                    <div style="flex:1;">
+                        <label style="font-size:0.8rem; color:#64748b; font-weight:bold; display:block; text-align:center;">التاريخ</label>
+                        <input type="date" id="wh-date" class="promo-field" style="width: 100%; padding: 10px; border-radius: 10px; background: #020617; color: white; border: 1px solid #334155; font-family: inherit; outline: none; text-align: center;">
+                    </div>
+                </div>
+                <div style="display:flex; gap:10px; margin-top:10px;">
+                    <div style="flex:1; min-width:0;">
+                        <label style="font-size:0.82rem; color:#6c757d; font-weight:800; display:block; text-align:center; margin-bottom:5px; white-space:nowrap;">الدرجة CATÉGORIE</label>
+                        <select id="wh-cat" class="promo-field" style="width:100%; min-width:100%; box-sizing:border-box; padding:10px 6px; font-size:1rem; font-weight:700; background:#020617; color:white; border:1px solid #334155; border-radius:10px; text-align:center;"></select>
+                    </div>
+                    <div style="flex:1; min-width:0;">
+                        <label style="font-size:0.82rem; color:#6c757d; font-weight:800; display:block; text-align:center; margin-bottom:5px; white-space:nowrap;">الصنف CLASSE</label>
+                        <select id="wh-ech" class="promo-field" style="width:100%; min-width:100%; box-sizing:border-box; padding:10px 6px; font-size:1rem; font-weight:700; background:#020617; color:white; border:1px solid #334155; border-radius:10px; text-align:center;"></select>
+                    </div>
+                </div>
+                <div style="display:flex; gap:8px; margin-top:15px;">
+                    <button type="button" id="btnSavePromo" class="btn-3d-action btn-blue" style="flex:2;" onclick="saveWorkerPromo()">+ تسجيل الترقية</button>
+                    <button type="button" id="btnDeletePromo" class="btn-3d-action btn-red" style="flex:1; display:none;" onclick="deleteCurrentPromo()">حذف 🗑️</button>
+                </div>
+                <button type="button" class="btn-top-control" style="width:100%; margin-top:10px; background:#e2e8f0; color:#334155; height: 40px;" onclick="hidePromoForm()">إلغاء</button>
+            </div>
+
+            <button type="button" class="btn-top-control" style="width:100%; margin-top:10px;" onclick="document.getElementById('workerPromoModal').style.display='none'">رجوع للقائمة</button>
+        </div>
+    </div>
+
+    <div id="editPromoFullScreenModal" class="modal">
+        <div class="modal-box-dark full-screen-modal">
+            
+            <div style="text-align:center; margin-bottom:35px;">
+                <h2 style="color:#3b82f6; font-size: 1.8rem; margin: 0; font-weight: 900;">تعديل الترقية</h2>
+                <p style="color:#94a3b8; margin-top:8px; font-size: 0.95rem;">تعديل تفاصيل الترقية المحددة فقط</p>
+            </div>
+
+            <div class="add-promo-box" style="margin-top: 0; background: transparent; border: none; padding: 0;">
+                
+                <div style="display:flex; flex-direction: column; gap:20px;">
+                    <div>
+                        <label style="font-size:1rem; color:#cbd5e1; font-weight:bold; display:block; text-align:center; margin-bottom: 10px;">التاريخ</label>
+                        <input type="date" id="edit-wh-date" class="promo-field modern-input" style="width: 100%; padding: 16px; font-size: 1.1rem; background: #020617; border: 1px solid #334155;">
+                    </div>
+                    
+                    <div style="display:flex; gap:15px;">
+                        <div style="flex:1;">
+                            <label style="font-size:0.9rem; color:#cbd5e1; font-weight:800; display:block; text-align:center; margin-bottom:10px;">الدرجة CATÉGORIE</label>
+                            <select id="edit-wh-cat" class="promo-field modern-input" style="width:100%; padding:16px; font-size:1.1rem; text-align: center; background: #020617; border: 1px solid #334155;"></select>
+                        </div>
+                        <div style="flex:1;">
+                            <label style="font-size:0.9rem; color:#cbd5e1; font-weight:800; display:block; text-align:center; margin-bottom:10px;">الصنف CLASSE</label>
+                            <select id="edit-wh-ech" class="promo-field modern-input" style="width:100%; padding:16px; font-size:1.1rem; text-align: center; background: #020617; border: 1px solid #334155;"></select>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="display:flex; flex-direction: column; gap:15px; margin-top:50px;">
+                    <button type="button" id="btnSaveChanges" class="btn-3d-action btn-blue" style="padding: 18px; font-size: 1.15rem;">حفظ التعديلات ✔️</button>
+                    <button type="button" id="btnDeletePromoFS" class="btn-3d-action btn-red" style="padding: 18px; font-size: 1.15rem;">حذف الترقية 🗑️</button>
+                    <button type="button" class="btn-top-control" style="width:100%; margin-top:10px; background:#1e293b; color:#f1f5f9; height: 55px; font-size: 1.1rem; border: 1px solid #475569;" onclick="document.getElementById('editPromoFullScreenModal').style.display='none'">إغلاق النافذة ✖</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div id="settingsModal" class="modal">
+        <div class="modal-box-light">
+            <h3 style="text-align:center; color:#1e293b;">إعدادات الدورة</h3>
+            <div id="settingsInputs"></div>
+            <button type="button" class="btn-top-control" style="width:100%; margin-top:15px; background:#10b981; color:white;" onclick="saveSettings()">حفظ</button>
+            <button type="button" class="btn-top-control" style="width:100%; margin-top:10px; background:#e2e8f0;" onclick="document.getElementById('settingsModal').style.display='none'">إلغاء</button>
+        </div>
+    </div>
+
+    <div id="leaveModal" class="modal">
+        <div class="modal-box-light" style="max-height: 85vh; display: flex; flex-direction: column;">
+            <h3 style="text-align:center; color:#1e3a8a; margin-bottom:15px; font-weight:900; flex-shrink: 0;">🏖️ العطلة السنوية</h3>
+            <div style="flex-shrink: 0;">
+                <label style="font-size:0.85rem; color:#64748b; font-weight:bold; display:block; margin-bottom:5px;">اسم العامل:</label>
+                <input type="text" id="leave-worker-name" class="modern-input" style="background:white; color:#334155; margin-bottom:15px;" placeholder="اكتب اسم العامل هنا...">
+                <div style="display:flex; gap:10px; margin-bottom:15px;">
+                    <div style="flex:1;">
+                        <label style="font-size:0.85rem; color:#64748b; font-weight:bold; display:block; margin-bottom:5px;">تاريخ الخروج:</label>
+                        <input type="date" id="leave-start-date" class="modern-input" style="background:white; color:#334155; padding:10px;" oninput="calculateReturnDate()">
+                    </div>
+                    <div style="flex:1;">
+                        <label style="font-size:0.85rem; color:#64748b; font-weight:bold; display:block; margin-bottom:5px;">المدة (أيام):</label>
+                        <input type="number" id="leave-duration" class="modern-input" style="background:white; color:#334155; padding:10px;" placeholder="مثال: 30" oninput="calculateReturnDate()">
+                    </div>
+                </div>
+                <div id="leave-result-card" class="leave-card-result">
+                    <div style="font-size:0.85rem; color:#047857; font-weight:bold;">تاريخ العودة المتوقع</div>
+                    <div id="leave-return-date" style="font-size:1.4rem; font-weight:900; color:#065f46; margin-top:5px; font-family:'Space Mono', monospace;">--/--/----</div>
+                </div>
+                <div style="display: flex; gap: 10px; margin-top: 15px;">
+                    <button type="button" class="btn-top-control" style="background:#10b981; color:white; flex: 2;" onclick="saveAnnualLeave()">+ إضافة عطلة</button>
+                    <button type="button" class="btn-top-control" style="background:#8B0000; color:white; flex: 1;" onclick="document.getElementById('leaveModal').style.display='none'">إغلاق</button>
+                </div>
+            </div>
+            
+            <div id="saved-leaves-list" class="saved-leaves-container"></div>
+        </div>
+    </div>
+
+    <div id="note-modal" class="modal">
+        <div class="modal-box-light" style="padding: 0; overflow: hidden; width: 95%; max-width: 400px;">
+            <div style="background: linear-gradient(135deg, #1e293b, #0f172a); padding: 15px 20px; text-align: center; color: white;">
+                <h3 style="margin:0; font-weight: 900; font-size: 1.1rem;">إدارة المهام والملاحظات 📝</h3>
+                <p id="note-subtitle" style="margin: 5px 0 0 0; font-size: 0.8rem; color: #94a3b8; font-weight: 700;"></p>
+            </div>
+            
+            <div style="padding: 15px 20px; max-height: 65vh; overflow-y: auto;">
+                <div class="task-section">
+                    <div class="task-header">المهمة الأولى</div>
+                    <textarea id="note1-text" class="task-input" placeholder="وصف المهمة..."></textarea>
+                    <div class="time-row">
+                        <div class="time-col">
+                            <label>من (البداية)</label>
+                            <input type="time" id="note1-start" class="time-input">
+                        </div>
+                        <div class="time-col">
+                            <label>إلى (النهاية)</label>
+                            <input type="time" id="note1-end" class="time-input">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="task-section">
+                    <div class="task-header">المهمة الثانية</div>
+                    <textarea id="note2-text" class="task-input" placeholder="وصف المهمة..."></textarea>
+                    <div class="time-row">
+                        <div class="time-col">
+                            <label>من (البداية)</label>
+                            <input type="time" id="note2-start" class="time-input">
+                        </div>
+                        <div class="time-col">
+                            <label>إلى (النهاية)</label>
+                            <input type="time" id="note2-end" class="time-input">
+                        </div>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 10px; margin-top: 20px;">
+                    <button type="button" onclick="saveShiftNote()" class="btn-3d-action" style="background: #10b981; color: white; flex: 2; box-shadow: 0 4px 0 #047857;">حفظ التغييرات</button>
+                    <button type="button" id="btn-delete-note" onclick="deleteShiftNote()" class="btn-3d-action" style="background: #ef4444; color: white; flex: 1; box-shadow: 0 4px 0 #b91c1c; display: none;">حذف الكل</button>
+                </div>
+                <button type="button" class="btn-top-control" style="width: 100%; margin-top: 10px; background: #e2e8f0; color: #334155; font-weight: 800;" onclick="closeNoteModal()">إلغاء وإغلاق</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="spas-dialog-overlay">
+        <div class="spas-dialog-box">
+            <div class="spas-dialog-handle"></div>
+            <div class="spas-dialog-inner">
+                <div class="spas-dialog-icon-wrap icon-wrap-default" id="sd-icon-wrap"><span id="sd-icon">⚠️</span></div>
+                <h3 class="spas-dialog-title" id="sd-title"></h3>
+                <div class="spas-dialog-divider"></div>
+                <p class="spas-dialog-msg" id="sd-msg"></p>
+                <input type="text" class="spas-dialog-input" id="sd-input" style="display:none;">
+                <div class="spas-dialog-btns" id="sd-btns"></div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="js/app.js"></script>
+</body>
+</html>

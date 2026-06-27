@@ -1,0 +1,8 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "app.web.spas_sonelgaz_cbbc6.twa",
+        "sha256_cert_fingerprints": ["31:6D:A3:FD:BE:06:04:D8:52:02:37:CC:6B:37:35:95:93:EC:2A:DA:5A:20:AB:E2:F7:6C:13:89:4E:9F:3A:05"]
+      }
+    }]
